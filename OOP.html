@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script>
+    class Animal {
+      constructor(name, color){
+        this.name = name;
+        this.color = color;
+        console.log(`You Created an Animal named ${this.name} with color ${this.color}`);
+        
+      }
+      move(){
+        console.log(`The ${this.name} is moving`);
+      }
+      jumb(){
+        console.log(`The ${this.name} is jumping`);
+      }
+    }
+    let lion = new Animal("Lion", "Yellow");
+    let tiger = new Animal("Tiger", "Black");
+    let elephant= new Animal("Elephant", "Gray");
+    lion.move();
+    lion.jumb();
+  </script>
+</html>
