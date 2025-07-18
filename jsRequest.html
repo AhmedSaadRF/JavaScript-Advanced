@@ -6,21 +6,117 @@
     <title>Document</title>
   </head>
   <body>
-    <h2>Hello JS Request</h2>
+    <h2>Hello JS Request!</h2>
+    <br />
     <div id="content"></div>
   </body>
 
   <script>
-    let request = new XMLHttpRequest();
-    request.open("GET", "https://jsonplaceholder.typicode.com/posts");
-    request.responseType = "json";
-    request.send();
-    request.onload = function () {
-      let posts = request.response;
+    function getPosts() {
+      let request = new XMLHttpRequest();
+      request.open("GET", "https://jsonplaceholder.typicode.com/posts");
+      request.responseType = "json";
+      request.send();
+      request.onload = function () {
+        if (request.status >= 200 && request.status < 300) {
+          let posts = request.response;
 
-      for (post of posts) {
-        document.getElementById("content").innerHTML += `<h1>${post.title}</h1>`;
-      }
-    };
+          for (post of posts) {
+            document.getElementById(
+              "content"
+            ).innerHTML += `<h1>${post.title}</h1>`;
+          }
+        } else {
+          alert("Error: " + request.status);
+        }
+      };
+    }
+
+    function createNewPost() {
+      let request = new XMLHttpRequest();
+      request.open("POST", "https://jsonplaceholder.typicode.com/posts");
+      request.responseType = "json";
+      request.setRequestHeader("Accept", "application/json");
+      request.setRequestHeader("Content-Type", "application/json");
+      let bodyParams = `{
+        "title": "foo",
+        "body": "bar",
+        "userId": 1
+      }`;
+      request.send(bodyParams);
+      request.onload = function () {
+        if (request.status >= 200 && request.status < 300) {
+          let response = request.response;
+          console.log(response);
+        } else {
+          alert("Error: " + request.status);
+        }
+      };
+    }
+
+    function updatePost() {
+      let request = new XMLHttpRequest();
+      request.open("PUT", "https://jsonplaceholder.typicode.com/posts/1");
+      request.responseType = "json";
+      request.setRequestHeader("Accept", "application/json");
+      request.setRequestHeader("Content-Type", "application/json");
+      let bodyParams = `{
+        "title": "foo",
+        "body": "bar",
+        "userId": 1
+      }`;
+      request.send(bodyParams);
+      request.onload = function () {
+        if (request.status >= 200 && request.status < 300) {
+          let response = request.response;
+          console.log(response);
+        } else {
+          alert("Error: " + request.status);
+        }
+      };
+    }
+
+    function deletePost() {
+      let request = new XMLHttpRequest();
+      request.open("DELETE", "https://jsonplaceholder.typicode.com/posts/1");
+      request.responseType = "json";
+      request.setRequestHeader("Accept", "application/json");
+      request.setRequestHeader("Content-Type", "application/json");
+      request.send();
+      request.onload = function () {
+        if (request.status >= 200 && request.status < 300) {
+          let response = request.response;
+          console.log(response);
+        } else {
+          alert("Error: " + request.status);
+        }
+      };
+    }
+
+    function getPostsWithUserIdFilter() {
+      let request = new XMLHttpRequest();
+      request.open("GET", "https://jsonplaceholder.typicode.com/posts?userId=1");
+      request.responseType = "json";
+      request.send();
+      request.onload = function () {
+        if (request.status >= 200 && request.status < 300) {
+          let posts = request.response;
+
+          for (post of posts) {
+            document.getElementById(
+              "content"
+            ).innerHTML += `<h1>${post.title}</h1>`;
+          }
+        } else {
+          alert("Error: " + request.status);
+        }
+      };
+    }
+
+    getPosts();
+    createNewPost();
+    updatePost();
+    deletePost();
+    getPostsWithUserIdFilter();
   </script>
 </html>
