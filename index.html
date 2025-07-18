@@ -6,6 +6,31 @@
   <title>Document</title>
 </head>
 <body>
+  <div style="display: flex; justify-content: center; align-items: center;">
+    <div style="margin-right: 10px;">
+      <h2>First Number</h2>
+      <input type="number" id="firstNumber">
+    </div>
+    <div style="margin-right: 10px;">
+      <h2>Second Number</h2>
+      <input type="number" id="secondNumber">
+    </div>
+  </div>
+  <div style="width: 100%; text-align: center; margin-top: 10px;">
+    <button id="calc-btn">Divide</button>
+  </div>
+  <div style="width: 100%; text-align: center;">
+    <h2>Result: <span id="result">0</span></h2>
+  </div>
 
+  <script>
+    document.getElementById('calc-btn').addEventListener('click', function() {
+      const firstNumber = document.getElementById('firstNumber').value;
+      const secondNumber = document.getElementById('secondNumber').value;
+      const result = divideNumbers(firstNumber, secondNumber);
+      document.getElementById('result').innerHTML = result;
+    });
+  </script>
+  <script src="logic.js"></script>
 </body>
 </html>
