@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Challenge 1</title>
+  </head>
+  <style>
+    * {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .selected {
+      border: 5px solid #ff7700;
+    }
+  </style>
+  <body
+    style="
+      background: linear-gradient(45deg, rgb(5, 5, 199), rgb(145, 2, 2));
+      padding: 30px;
+      display: flex;
+    "
+  >
+    <div style="width: 300px" id="userContent"></div>
+    <div
+      id="userPosts"
+      style="
+        flex: 1;
+        background-color: #dcdada;
+        margin-left: 50px;
+        padding: 20px 40px;
+      "
+    ></div>
+  </body>
+  <script>
+    function getUsers() {
+      let request = new XMLHttpRequest();
+      request.open("GET", "https://jsonplaceholder.typicode.com/users");
+      request.responseType = "json";
+      request.send();
+      request.onload = function () {
+        if (request.status >= 200 && request.status < 300) {
+          let users = request.response;
+
+          for (user of users) {
+            document.getElementById("userContent").innerHTML += `
+              <div class="user-card" style="padding: 10px; background-color: white; border-radius: 20px; margin-top: 10px; width: 100%; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); cursor: pointer;"
+                onclick="handleUserClick(this, ${user.id})"
+              >
+                <h4>${user.name}</h4>
+                <h5>${user.email}</h5>
+              </div>
+            `;
+          }
+        } else {
+          alert("Error: " + request.status);
+        }
+      };
+    }
+
+    function getUserPosts(userId) {
+      let request = new XMLHttpRequest();
+      request.open(
+        "GET",
+        `https://jsonplaceholder.typicode.com/posts?userId=${userId}`
+      );
+      request.responseType = "json";
+      request.send();
+      request.onload = function () {
+        if (request.status >= 200 && request.status < 300) {
+          let posts = request.response;
+          document.getElementById("userPosts").innerHTML = ""; 
+          for (post of posts) {
+            document.getElementById("userPosts").innerHTML += `
+              <div style="padding: 15px; background-color: white; border-radius: 20px; margin-top: 10px; width: 100%; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                <h4>${post.title}</h4>
+                <hr style="border: 1px solid #ccc; margin: 10px 0;" />
+                <h5>${post.body}</h5>
+              </div>
+            `;
+          }
+        } else {
+          alert("Error: " + request.status);
+        }
+      };
+    }
+    getUsers();
+    getUserPosts(1);
+
+    function handleUserClick(element, userId) {
+      // Remove 'selected' class from all user cards
+      document.querySelectorAll('.user-card').forEach(card => card.classList.remove('selected'));
+      // Add 'selected' class to the clicked card
+      element.classList.add('selected');
+      // Load posts for the selected user
+      getUserPosts(userId);
+    }
+
+  </script>
+</html>
