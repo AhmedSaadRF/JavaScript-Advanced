@@ -8,13 +8,14 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
+.vscode
+.qodo
 dist
 dist-ssr
 dist-esm
 *.local
 
 # Editor directories and files
-.vscode
 .DS_Store
 *.suo
 *.ntvs*
